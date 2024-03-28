@@ -1,0 +1,150 @@
+Setting environment for using XAMPP for Windows.
+ThinkPad@DESKTOP-QL4AOG5 c:\xampp1
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 10
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| dbkuliah           |
+| dbti08             |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+7 rows in set (0.001 sec)
+
+MariaDB [(none)]> USE dbkuliah
+Database changed
+MariaDB [dbkuliah]> DESC mahasiswa;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| id        | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nim       | int(11)     | NO   |     | NULL    |                |
+| nama      | varchar(30) | NO   |     | NULL    |                |
+| alamat    | varchar(30) | NO   |     | NULL    |                |
+| idjurusan | int(11)     | NO   |     | NULL    |                |
+| foto      | varchar(30) | YES  |     | NULL    |                |
++-----------+-------------+------+-----+---------+----------------+
+6 rows in set (0.018 sec)
+
+MariaDB [dbkuliah]> SHOW TABLES;
++--------------------+
+| Tables_in_dbkuliah |
++--------------------+
+| jenis              |
+| mahasiswa          |
++--------------------+
+2 rows in set (0.001 sec)
+
+MariaDB [dbkuliah]> DESC jenis;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nama  | varchar(30) | NO   | UNI | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+2 rows in set (0.018 sec)
+
+MariaDB [dbkuliah]> CREATE TABLE jurusan(
+    -> id  int primary key auto_increment not null,
+    -> nama varchar(30) not null);
+Query OK, 0 rows affected (0.043 sec)
+
+MariaDB [dbkuliah]> DESC jurusan;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nama  | varchar(30) | NO   |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+2 rows in set (0.019 sec)
+
+MariaDB [dbkuliah]> INSERT INTO jurusan (nama) VALUES
+    -> ('Teknik informatika'),('Bahasa indonesia'),('Sistem informasi'),('Bahasa inggris'),('Bisnis digital');
+Query OK, 5 rows affected (0.012 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [dbkuliah]> SELECT * FROM jurusan;
++----+--------------------+
+| id | nama               |
++----+--------------------+
+|  1 | Teknik informatika |
+|  2 | Bahasa indonesia   |
+|  3 | Sistem informasi   |
+|  4 | Bahasa inggris     |
+|  5 | Bisnis digital     |
++----+--------------------+
+5 rows in set (0.000 sec)
+
+MariaDB [dbkuliah]> DESC mahasiswa;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| id        | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nim       | int(11)     | NO   |     | NULL    |                |
+| nama      | varchar(30) | NO   |     | NULL    |                |
+| alamat    | varchar(30) | NO   |     | NULL    |                |
+| idjurusan | int(11)     | NO   |     | NULL    |                |
+| foto      | varchar(30) | YES  |     | NULL    |                |
++-----------+-------------+------+-----+---------+----------------+
+6 rows in set (0.015 sec)
+
+MariaDB [dbkuliah]> INSERT INTO mahasiswa (nim,nama,alamat,idjurusan,foto) VALUE
+    -> ('0110223234','nurhasanah','jakarta selatan','1','nurhasanah.jpg');
+Query OK, 1 row affected (0.012 sec)
+
+MariaDB [dbkuliah]> SELECT * FROM mahasiswa;
++----+-----------+------------+-----------------+-----------+----------------+
+| id | nim       | nama       | alamat          | idjurusan | foto           |
++----+-----------+------------+-----------------+-----------+----------------+
+|  1 | 110223234 | nurhasanah | jakarta selatan |         0 | nurhasanah.jpg |
+|  2 | 110223234 | nurhasanah | jakarta selatan |         1 | nurhasanah.jpg |
++----+-----------+------------+-----------------+-----------+----------------+
+2 rows in set (0.000 sec)
+
+MariaDB [dbkuliah]> UPDATE mahasiswa SET nim='0110223235',nama='ulfa faradillah',alamat='depok',idjurusan='2',foto='ulfa faradillah.jpg'
+    -> WHERE id=1;
+Query OK, 1 row affected (0.010 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbkuliah]> SELECT * FROM mahasiswa;
++----+-----------+-----------------+-----------------+-----------+---------------------+
+| id | nim       | nama            | alamat          | idjurusan | foto                |
++----+-----------+-----------------+-----------------+-----------+---------------------+
+|  1 | 110223235 | ulfa faradillah | depok           |         2 | ulfa faradillah.jpg |
+|  2 | 110223234 | nurhasanah      | jakarta selatan |         1 | nurhasanah.jpg      |
++----+-----------+-----------------+-----------------+-----------+---------------------+
+2 rows in set (0.000 sec)
+
+MariaDB [dbkuliah]> INSERT INTO mahasiswa (nim,nama,alamat,idjurusan,foto) VALUES
+    -> ('0110223236','nuril','bogor','3','nuril.jpg'),
+    -> ('0110223237','nabilla','medan','4','nabilla.jpg'),
+    -> ('0110223238','jihan','bima','5','jihan.jpg');
+Query OK, 3 rows affected (0.014 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [dbkuliah]> SELECT * FROM mahasiswa;
++----+-----------+-----------------+-----------------+-----------+---------------------+
+| id | nim       | nama            | alamat          | idjurusan | foto                |
++----+-----------+-----------------+-----------------+-----------+---------------------+
+|  1 | 110223235 | ulfa faradillah | depok           |         2 | ulfa faradillah.jpg |
+|  2 | 110223234 | nurhasanah      | jakarta selatan |         1 | nurhasanah.jpg      |
+|  3 | 110223236 | nuril           | bogor           |         3 | nuril.jpg           |
+|  4 | 110223237 | nabilla         | medan           |         4 | nabilla.jpg         |
+|  5 | 110223238 | jihan           | bima            |         5 | jihan.jpg           |
++----+-----------+-----------------+-----------------+-----------+---------------------+
+5 rows in set (0.000 sec)
+
+MariaDB [dbkuliah]>
